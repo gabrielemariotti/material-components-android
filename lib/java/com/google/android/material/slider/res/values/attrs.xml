@@ -35,6 +35,8 @@
       <!-- Mode that prevents the label from being drawn -->
       <enum name="gone" value="2"/>
     </attr>
+    <!-- Whether to show always the label. -->
+    <attr name="labelAlwaysVisible" format="boolean"/>
     <!-- The style used for the label TooltipDrawable. -->
     <attr name="labelStyle" format="reference" />
     <!-- The color of the slider's thumb. -->

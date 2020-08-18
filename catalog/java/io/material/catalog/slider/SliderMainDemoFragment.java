@@ -72,8 +72,13 @@ public class SliderMainDemoFragment extends DemoFragment {
     RangeSlider rangeSlider = view.findViewById(R.id.range_slider);
     rangeSlider.addOnSliderTouchListener(rangeSliderTouchListener);
 
+    Slider sliderLabelAlwaysVisible = view.findViewById(R.id.slider_label_always_visible);
+
     Button button = view.findViewById(R.id.button);
-    button.setOnClickListener(v -> slider.setValue(slider.getValueTo()));
+    button.setOnClickListener(v -> {
+      slider.setValue(slider.getValueTo());
+      sliderLabelAlwaysVisible.setLabelAlwaysVisible(!sliderLabelAlwaysVisible.isLabelAlwaysVisible());
+    });
 
     return view;
   }

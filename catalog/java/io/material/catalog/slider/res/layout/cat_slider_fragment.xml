@@ -43,6 +43,25 @@
     android:valueFrom="0.0"
     android:valueTo="11.0" />
 
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/cat_slider_title_top_padding"
+    android:text="@string/cat_slider_title_always"/>
+
+  <com.google.android.material.slider.Slider
+    android:id="@+id/slider_label_always_visible"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:layout_gravity="center"
+    android:value="1.0"
+    android:valueFrom="0.0"
+    android:valueTo="10.0"
+    app:labelBehavior="withinBounds"
+    app:labelAlwaysVisible="true"
+    />
+
   <Button
       android:id="@+id/button"
       android:layout_width="wrap_content"

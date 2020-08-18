@@ -21,6 +21,7 @@
   <public name="haloRadius" type="attr" />
   <public name="labelBehavior" type="attr" />
   <public name="labelStyle" type="attr" />
+  <public name="labelAlwaysVisible" type="attr"/>
   <public name="thumbColor" type="attr" />
   <public name="thumbElevation" type="attr" />
   <public name="thumbRadius" type="attr" />

@@ -38,4 +38,6 @@
   <string name="cat_slider_start_touch_description" description="Indicates the slider is now being touched">Slider started being touched</string>
   <string name="cat_slider_stop_touch_description" description="Indicates the slider stopped being touched">Slider stopped being touched</string>
 
+  <string name="cat_slider_title_always" description="The title for a demonstration slider">Label always visible</string>
+
 </resources>

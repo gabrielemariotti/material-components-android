@@ -113,6 +113,7 @@ import java.util.List;
  *   <li>{@code labelBehavior}: The behavior of the label which can be {@code LABEL_FLOATING},
  *       {@code LABEL_WITHIN_BOUNDS}, or {@code LABEL_GONE}. See {@link LabelBehavior} for more
  *       information.
+ *   <li>{@code labelAlwaysVisible}: Whether to show always the label.</li>
  *   <li>{@code labelStyle}: the style to apply to the value indicator {@link TooltipDrawable}.
  *   <li>{@code thumbColor}: the color of the slider's thumb.
  *   <li>{@code thumbElevation}: the elevation of the slider's thumb.
@@ -226,6 +227,7 @@ abstract class BaseSlider<
 
   private int widgetHeight;
   private int labelBehavior;
+  private boolean labelAlwaysVisible;
   private int trackHeight;
   private int trackSidePadding;
   private int trackTop;
@@ -434,6 +436,7 @@ abstract class BaseSlider<
     setTrackHeight(a.getDimensionPixelSize(R.styleable.Slider_trackHeight, 0));
 
     labelBehavior = a.getInt(R.styleable.Slider_labelBehavior, LABEL_FLOATING);
+    labelAlwaysVisible = a.getBoolean(R.styleable.Slider_labelAlwaysVisible, false);
 
     if (!a.getBoolean(R.styleable.Slider_android_enabled, true)) {
       setEnabled(false);
@@ -1148,6 +1151,33 @@ abstract class BaseSlider<
   }
 
   /**
+   * Returns whether the label is always visible.
+   *
+   * @see #setLabelAlwaysVisible(boolean)
+   * @attr ref com.google.android.material.R.styleable#Slider_labelAlwaysVisible
+   */
+  public boolean isLabelAlwaysVisible() {
+    return labelAlwaysVisible;
+  }
+
+  /**
+   * Sets whether the label is always visible.
+   *
+   * @param labelAlwaysVisible
+   * @attr ref com.google.android.material.R.styleable#Slider_abelAlwaysVisible
+   */
+  public void setLabelAlwaysVisible(boolean labelAlwaysVisible) {
+    if (this.labelAlwaysVisible != labelAlwaysVisible) {
+      this.labelAlwaysVisible = labelAlwaysVisible;
+      if (labelAlwaysVisible) {
+        requestLayout();
+      } else {
+        invalidateLabels();
+      }
+    }
+  }
+
+  /**
    * Returns the color of the track if the active and inactive parts aren't different.
    *
    * @throws IllegalStateException If {@code trackColorActive} and {@code trackColorInactive} have
@@ -1364,9 +1394,13 @@ abstract class BaseSlider<
 
     if ((thumbIsPressed || isFocused()) && isEnabled()) {
       maybeDrawHalo(canvas, trackWidth, top);
+    }
 
+    if (labelAlwaysVisible) {
+      ensureLabels();
+    } else {
       // Draw labels if there is an active thumb.
-      if (activeThumbIdx != -1) {
+      if (((thumbIsPressed || isFocused()) && isEnabled()) && (activeThumbIdx != -1)) {
         ensureLabels();
       }
     }
@@ -1774,6 +1808,12 @@ abstract class BaseSlider<
     label.setBounds(rect);
 
     ViewUtils.getContentViewOverlay(this).add(label);
+  }
+
+  private void invalidateLabels(){
+    for (TooltipDrawable label : labels) {
+      ViewUtils.getContentViewOverlay(this).remove(label);
+    }
   }
 
   private void invalidateTrack() {
